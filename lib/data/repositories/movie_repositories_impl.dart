@@ -1,0 +1,3 @@
+class MovieRepositoryImpl implements MovieRepository {
+  
+}
