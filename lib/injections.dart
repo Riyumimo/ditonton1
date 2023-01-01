@@ -14,6 +14,7 @@ import 'package:ditonton/domain/usecase/save_watchlist.dart';
 import 'package:ditonton/domain/usecase/search_movies.dart';
 import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
+import 'package:ditonton/presentation/provider/search_movie_notofier.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
@@ -34,7 +35,11 @@ void init() {
       getWatchListStatus: locator(),
       saveWatchList: locator(),
       removeWatchList: locator()));
-
+  locator.registerFactory(
+    () => MovieSearchNotifier(
+      searchMovies: locator(),
+    ),
+  );
   //usescase
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));
   locator.registerLazySingleton(() => GetPopularMovies(locator()));
@@ -48,16 +53,18 @@ void init() {
   locator.registerLazySingleton(() => GetWatchlistMovies(locator()));
 
   //repository
-  locator.registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<MovieRepository>(
+      () => MovieRepositoryImpl(locator(), locator()));
 
-  //data source 
-  locator.registerLazySingleton<MovieLocalDataSource>(() => MovieLoacalDataSourceImpl(databaseHelper: locator()));
-  locator.registerLazySingleton<MovieRemoteDataSource>(() =>MovieRemoteDataSourceImpl(client: locator()));
+  //data source
+  locator.registerLazySingleton<MovieLocalDataSource>(
+      () => MovieLoacalDataSourceImpl(databaseHelper: locator()));
+  locator.registerLazySingleton<MovieRemoteDataSource>(
+      () => MovieRemoteDataSourceImpl(client: locator()));
 
   //helper
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
 
   //external
   locator.registerLazySingleton(() => http.Client());
-
 }

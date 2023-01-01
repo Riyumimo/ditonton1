@@ -1,5 +1,3 @@
-import 'package:dartz/dartz.dart';
-
 class ServerException implements Exception {}
 
 class DatabaseException1 implements Exception {

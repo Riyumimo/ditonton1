@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/movie.dart';
+import 'package:ditonton/presentation/pages/movie_detail_page.dart';
+import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -56,6 +58,7 @@ void initState() {
         actions: [
           IconButton(onPressed: (){
             // going to navigator search movie
+            Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
           }, icon: Icon(Icons.search))
         ],
       ),
@@ -163,7 +166,8 @@ class MovieList extends StatelessWidget {
           return Container(
             padding: EdgeInsets.all(6),
             child: InkWell(onTap:  () {
-              // push page with data here to detail...
+              // push page with data here to detail...'
+              Navigator.pushNamed(context, MovieDetailPage.ROUTE_NAME,arguments: movie.id);
             },
               child: ClipRRect(borderRadius: BorderRadius.all(Radius.circular(16),),
               child: CachedNetworkImage(imageUrl: 'https://image.tmdb.org/t/p/w500${movie.posterPath}'
